@@ -23,8 +23,9 @@ func init() {
 
 	// log config
 	logger.Info(fmt.Sprintf("%s: %s", "Environment", config.Environment()))
-	logger.Info(fmt.Sprintf("%s: %s", "ShielderAddress", config.ShielderAddress()))
-	logger.Info(fmt.Sprintf("%s: %s", "PorterV1Address", config.PorterV1Address()))
+	logger.Info(fmt.Sprintf("%s: %s", "ShielderPort", config.ShielderPort()))
+	logger.Info(fmt.Sprintf("%s: %s", "PorterV1Host", config.PorterV1Host()))
+	logger.Info(fmt.Sprintf("%s: %s", "PorterV1Port", config.PorterV1Port()))
 }
 
 var environment string
@@ -49,7 +50,7 @@ func process() {
 	err = pb.RegisterPorterV1HandlerFromEndpoint(
 		ctx,
 		mux,
-		config.PorterV1Address(),
+		fmt.Sprintf("%s:%s", config.PorterV1Host(), config.PorterV1Port()),
 		[]grpc.DialOption{
 			grpc.WithInsecure(),
 		},
@@ -58,7 +59,7 @@ func process() {
 		logger.Panic(fmt.Sprintf("pb.RegisterPorterV1HandlerFromEndpoint %v", err))
 	}
 
-	http.ListenAndServe(config.ShielderAddress(), mux)
+	http.ListenAndServe(fmt.Sprintf(":%s", config.ShielderPort()), mux)
 }
 
 func main() {
