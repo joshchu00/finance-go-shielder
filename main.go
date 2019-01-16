@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/gorilla/handlers"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/joshchu00/finance-go-common/config"
 	"github.com/joshchu00/finance-go-common/logger"
@@ -59,7 +60,13 @@ func process() {
 		logger.Panic(fmt.Sprintf("pb.RegisterPorterV1HandlerFromEndpoint %v", err))
 	}
 
-	http.ListenAndServe(fmt.Sprintf(":%s", config.ShielderPort()), mux)
+	http.ListenAndServe(
+		fmt.Sprintf(":%s", config.ShielderPort()),
+		handlers.CORS(
+			handlers.AllowedMethods([]string{"GET"}),
+			handlers.AllowedOrigins([]string{"http://localhost:3000"}),
+		)(mux),
+	)
 }
 
 func main() {
