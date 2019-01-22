@@ -25,6 +25,8 @@ func init() {
 	// log config
 	logger.Info(fmt.Sprintf("%s: %s", "Environment", config.Environment()))
 	logger.Info(fmt.Sprintf("%s: %s", "ShielderPort", config.ShielderPort()))
+	logger.Info(fmt.Sprintf("%s: %s", "ShielderCORSMethods", config.ShielderCORSMethods()))
+	logger.Info(fmt.Sprintf("%s: %s", "ShielderCORSOrigins", config.ShielderCORSOrigins()))
 	logger.Info(fmt.Sprintf("%s: %s", "PorterV1Host", config.PorterV1Host()))
 	logger.Info(fmt.Sprintf("%s: %s", "PorterV1Port", config.PorterV1Port()))
 }
@@ -63,8 +65,8 @@ func process() {
 	http.ListenAndServe(
 		fmt.Sprintf(":%s", config.ShielderPort()),
 		handlers.CORS(
-			handlers.AllowedMethods([]string{"GET"}),
-			handlers.AllowedOrigins([]string{"http://localhost:3000"}),
+			handlers.AllowedMethods(config.ShielderCORSMethods()),
+			handlers.AllowedOrigins(config.ShielderCORSOrigins()),
 		)(mux),
 	)
 }
