@@ -1,11 +1,12 @@
 @Library("library") _
 
-build {
+jBuild {
   [
     gitURL = 'https://github.com/joshchu00/finance-go-shielder.git',
     gitBranch = 'develop',
     buildLanguage = 'go',
     buildImage = 'joshchu00/go-build-base:1.11.5-alpine',
-    dockerName = 'joshchu00/finance-go-shielder'
+    dockerName = 'joshchu00/finance-go-shielder',
+    downstreamJob = 'finance-deployment'
   ]
 }
