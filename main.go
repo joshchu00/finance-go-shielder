@@ -24,6 +24,7 @@ func init() {
 
 	// log config
 	logger.Info(fmt.Sprintf("%s: %s", "EnvironmentName", config.EnvironmentName()))
+	logger.Info(fmt.Sprintf("%s: %s", "LogDirectory", config.LogDirectory()))
 	logger.Info(fmt.Sprintf("%s: %s", "ShielderPort", config.ShielderPort()))
 	logger.Info(fmt.Sprintf("%s: %s", "ShielderCORSMethods", config.ShielderCORSMethods()))
 	logger.Info(fmt.Sprintf("%s: %s", "ShielderCORSOrigins", config.ShielderCORSOrigins()))
