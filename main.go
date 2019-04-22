@@ -65,10 +65,12 @@ func process() {
 
 	http.ListenAndServe(
 		fmt.Sprintf(":%s", config.ShielderPort()),
-		handlers.CORS(
-			handlers.AllowedMethods(config.ShielderCORSMethods()),
-			handlers.AllowedOrigins(config.ShielderCORSOrigins()),
-		)(mux),
+		handlers.CompressHandler(
+			handlers.CORS(
+				handlers.AllowedMethods(config.ShielderCORSMethods()),
+				handlers.AllowedOrigins(config.ShielderCORSOrigins()),
+			)(mux),
+		),
 	)
 }
 
